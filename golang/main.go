@@ -61,6 +61,47 @@ type Interval struct {
 	End   int
 }
 
+func getRightToLeftDiagonal(grid [][]int) []int {
+	n := len(grid)
+	result := make([]int, n)
+
+	for i := 0; i < n; i++ {
+		result[i] = grid[i][n-1-i]
+	}
+
+	return result
+}
+
+func printRightToLeftDiagonals(grid [][]int) {
+	rows := len(grid)
+	if rows == 0 {
+		return
+	}
+	cols := len(grid[0])
+
+	// Start from the top row, going from right to left
+	for col := cols - 1; col >= 0; col-- {
+		i, j := 0, col
+		for i < rows && j < cols {
+			fmt.Print(grid[i][j], " ")
+			i++
+			j++
+		}
+		fmt.Println()
+	}
+
+	// Then start from the second row down, first column
+	for row := 1; row < rows; row++ {
+		i, j := row, 0
+		for i < rows && j < cols {
+			fmt.Print(grid[i][j], " ")
+			i++
+			j++
+		}
+		fmt.Println()
+	}
+}
+
 // mergeIntervals merges overlapping intervals in a list
 func mergeIntervals(intervals []Interval) []Interval {
 	if len(intervals) == 0 {
@@ -147,6 +188,13 @@ func main() {
 		{0, 0, 0, 1, 1},
 		{1, 0, 0, 0, 0},
 	}
+
+	diagnalGrid := [][]int{{9, 3, 2},
+		{8, 6, 1},
+		{5, 5, 6},
+		{1, 2, 8}}
+
+	printRightToLeftDiagonals(diagnalGrid)
 
 	fmt.Printf("Island Count: %d\n", islandFinder.CountIslands(grid))
 }
